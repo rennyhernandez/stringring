@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -42,11 +41,7 @@ public class UserService {
   @RequestMapping(value = "/user/{userId}/lists")
   public Set<List> getLists(@PathVariable Long userId){
       User user = userRepository.findById(userId);
-      HashSet<List> lists = new HashSet<>();
-      if(user != null){
-        lists = (HashSet<List>) user.getLists();
-      }
-      return lists;
+      return user.getLists();
   }
 
   @RequestMapping(value = "/user/{userId}/list",
