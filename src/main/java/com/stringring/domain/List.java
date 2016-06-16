@@ -58,22 +58,36 @@ public class List {
     this.items.add(item);
   }
 
-  @Column(name= "is_public")
+  @Column(name = "is_public")
   private boolean isPublic;
 
   @Column(name = "created_at")
   private Date createdAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Item.class)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,
+  mappedBy = "list", fetch = FetchType.LAZY)
   private Set<Item> items;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   public List(){
 
   }
 
-  public List(String name, String description) {
+  public List(String name, String description, Boolean isPublic) {
     this.name = name;
     this.description = description;
+    this.isPublic = isPublic;
   }
 
   public void addItem(String content, String type){

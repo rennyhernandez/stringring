@@ -1,7 +1,6 @@
 package com.stringring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by alexander on 28/05/16.
@@ -13,9 +12,16 @@ public class Item {
   private String content;
   private String type;
 
-  public Item(String content, String type) {
-    this.content = content;
-    this.type = type;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "list_id")
+  private List list;
+
+  public List getList() {
+    return list;
+  }
+
+  public void setList(List list) {
+    this.list = list;
   }
 
   public String getContent() {
@@ -32,5 +38,14 @@ public class Item {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+
+  public Item(String content, String type) {
+    this.content = content;
+    this.type = type;
+  }
+
+  public Item(){
   }
 }

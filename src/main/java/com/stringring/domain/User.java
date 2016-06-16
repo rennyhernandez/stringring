@@ -21,7 +21,8 @@ public class User {
 
   private String password;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+      cascade = CascadeType.ALL)
   private Set<List> lists;
 
   public User(){}
@@ -46,12 +47,22 @@ public class User {
     this.email = email;
   }
 
+  public List createList(String name, String description, Boolean isPublic){
+    List list = new List(name, description, isPublic);
+    this.lists.add(list);
+    return list;
+  }
+
   public List createList(String name, String description){
-    List list = new List(name, description);
+    List list = new List(name, description, false);
     this.lists.add(list);
     return list;
   }
   public Set<List> getLists(){
     return this.lists;
+  }
+
+  public void setLists(Set<List> lists) {
+    this.lists = lists;
   }
 }

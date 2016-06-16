@@ -18,7 +18,7 @@ import java.util.Set;
 @RestController
 @EnableAutoConfiguration
 public class UserService {
-  Logger log = getLogger(UserService.class);
+  final Logger LOG = getLogger(UserService.class);
 
   @Autowired
   private UserRepository userRepository;
@@ -29,13 +29,16 @@ public class UserService {
     return userRepository.findById(userId);
   }
   @RequestMapping(value="/user/{userId}", method = RequestMethod.PUT)
-  public User updateUser(@PathVariable Long userId, @RequestBody User user){
-    return userRepository.save(user);
-
+  public User updateUser(@PathVariable Long userId, @RequestBody User nUser){
+    User user = userRepository.findById(userId);
+    if(user != null){
+      //TODO: get changes and commit them
+    }
+    return userRepository.save(nUser);
   }
 
   @RequestMapping(value="/user", method = RequestMethod.POST)
-  public User updateUser(@RequestBody User user){
+  public User createUser(@RequestBody User user){
     return userRepository.save(user);
   }
   @RequestMapping(value = "/user/{userId}/lists")
