@@ -43,7 +43,7 @@ public class UserService {
   }
   @RequestMapping(value = "/user/{userId}/lists")
   public Set<List> getLists(@PathVariable Long userId){
-      User user = userRepository.findById(userId);
+      User user = userRepository.f  indById(userId);
       return user.getLists();
   }
 
